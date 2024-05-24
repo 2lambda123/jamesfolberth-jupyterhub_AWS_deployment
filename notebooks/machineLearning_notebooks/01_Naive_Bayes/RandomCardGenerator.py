@@ -1,4 +1,4 @@
-import random
+import secrets
 
 
 class Card():
@@ -8,8 +8,8 @@ class Card():
         faces = {11: "Jack", 12: "Queen", 13: "King"}
         suits = {1: "Spades", 2: "Hearts", 3: "Diamonds", 4: "Clubs"}
 
-        cardnum = random.randint(1,13)
-        suitnum = random.randint(1,4)
+        cardnum = secrets.SystemRandom().randint(1,13)
+        suitnum = secrets.SystemRandom().randint(1,4)
         
         self.number = faces.get(cardnum, cardnum)
         self.suit   = suits[suitnum]
