@@ -20,6 +20,7 @@ from traitlets.config import LoggingConfigurable
 from traitlets import Bool, Set, Unicode, Dict, Any, default, observe
 
 import oauthenticator
+from security import safe_command
 
 HOME_BASE='/mnt/nfs/home/'
 
@@ -60,7 +61,7 @@ class LocalGoogleOAuthenticator(oauthenticator.LocalGoogleOAuthenticator):
         name = user.name
         cmd = [ arg.format(username=name) for arg in self.add_user_cmd ] + [name]
         self.log.info("Creating user: %s", ' '.join(map(pipes.quote, cmd)))
-        p = Popen(cmd, stdout=PIPE, stderr=STDOUT)
+        p = safe_command.run(Popen, cmd, stdout=PIPE, stderr=STDOUT)
         p.wait()
         if p.returncode:
             err = p.stdout.read().decode('utf8', 'replace')
